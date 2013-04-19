@@ -1,0 +1,16 @@
+aaaaa
+aaaab
+aaaba
+aaabb
+abaaa
+abaab
+ababa
+ababb
+bbaaa
+bbaab
+bbaba
+bbabb
+a1a2a3
+a1a2b3
+a1b2a3
+a1b2b3

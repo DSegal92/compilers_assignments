@@ -1,0 +1,131 @@
+rm -f yacc.c y.tab.h y.output *.o
+yacc -dv yacc.y 
+conflicts: 1 shift/reduce
+mv -f y.tab.c yacc.c
+gcc -g   -c -o yacc.o yacc.c
+lex  -t lex.l > lex.c
+gcc -g   -c -o lex.o lex.c
+gcc -g   -c -o main.o main.c
+gcc -g yacc.o lex.o main.o -o calc
+rm lex.c yacc.c
+for dls148 start time: Tue Nov  6 11:44:36 2012
+	t1 = 3
+	t2 = 2
+	t3 = t1 + t2
+	a3 = t3
+	t1 = 3
+	t2 = - t1
+	t3 = 2
+	t4 = - t3
+	t5 = t2 * t4
+	b2 = t5
+	t1 = a3
+	t2 = b2
+	t3 = t1 / t2
+	a3 = t3
+	t1 = a3
+	t2 = ~ t1
+	t3 = b2
+	t4 = - t3
+	t5 = t2 - t4
+	b2 = t5
+	t1 = 3
+	t2 = 2
+	t3 = ~ t2
+	t4 = t1 + t3
+	t5 = a3
+	t6 = b2
+	t7 = t5 * t6
+	t8 = t4 * t7
+	t9 = 3
+	t10 = 2
+	t11 = t9 - t10
+	t12 = t8 / t11
+	t13 = 3
+	t14 = 2
+	t15 = t13 - t14
+	t16 = t12 % t15
+	ab1 = t16
+symbol table: 
+index: 4 identifier: ab1
+index: 3 identifier: b2
+index: 2 constant: 2 format: decimal
+index: 1 constant: 3 format: decimal
+index: 0 identifier: a3
+for dls148 start time: Tue Nov  6 11:44:36 2012
+	t1 = a3
+	t2 = 0x01
+	t3 = t1 & t2
+	IFTRUE t3 GOTO label1
+	t4 = 3
+	t5 = 2
+	t6 = t4 + t5
+	a3 = t6
+	label1: 
+	t1 = b2
+	t2 = 0x01
+	t3 = t1 | t2
+	IFTRUE t3 GOTO label2
+	t4 = 3
+	t5 = - t4
+	t6 = 2
+	t7 = - t6
+	t8 = t5 * t7
+	b2 = t8
+	label2: 
+	t1 = a3
+	t2 = 0x01
+	t3 = t1 ^ t2
+	IFTRUE t3 GOTO label3
+	t4 = a3
+	t5 = b2
+	t6 = t4 / t5
+	a3 = t6
+	GOTO label4
+	label3: 
+	t7 = 0x01
+	a3 = t7
+	label4: 
+	t1 = b2
+	t2 = 0x01
+	t3 = t1 % t2
+	IFTRUE t3 GOTO label5
+	t4 = a3
+	t5 = ~ t4
+	t6 = b2
+	t7 = - t6
+	t8 = t5 - t7
+	b2 = t8
+	label5: 
+	t1 = a3
+	t2 = a2
+	t3 = t1 & t2
+	IFTRUE t3 GOTO label6
+	t4 = 3
+	t5 = 2
+	t6 = ~ t5
+	t7 = t4 + t6
+	t8 = a3
+	t9 = b2
+	t10 = t8 * t9
+	t11 = t7 * t10
+	ab1 = t11
+	GOTO label7
+	label6: 
+	t12 = 3
+	t13 = 2
+	t14 = t12 - t13
+	t15 = 3
+	t16 = 2
+	t17 = t15 - t16
+	t18 = t14 % t17
+	ab1 = t18
+	label7: 
+symbol table: 
+index: 6 identifier: ab1
+index: 5 identifier: a2
+index: 4 identifier: b2
+index: 3 constant: 2 format: decimal
+index: 2 constant: 3 format: decimal
+index: 1 constant: 0x01 format: hex
+index: 0 identifier: a3

@@ -1,0 +1,89 @@
+rm -f relop.c ifthen.c y.tab.h y.output *.o
+yacc -dv ifthen.y 
+mv -f y.tab.c ifthen.c
+gcc -g   -c -o ifthen.o ifthen.c
+lex  -t relop.l > relop.c
+gcc -g   -c -o relop.o relop.c
+gcc -g   -c -o main.o main.c
+gcc -g ifthen.o relop.o main.o -o ifrelop
+rm relop.c ifthen.c
+for dls148 start time: Tue Sep 25 12:18:09 2012
+expr1: a1 relop: < expr2: 1
+expr1: b1 relop: <= expr2: 2
+expr1: c1 relop: = expr2: 3
+expr1: d1 relop: <> expr2: 4
+expr1: e1 relop: > expr2: 5
+expr1: f1 relop: >= expr2: 6
+symbol table: 
+index: 1 identifier: a1
+index: 2 constant: 1 format: decimal
+index: 3 identifier: b1
+index: 4 constant: 2 format: decimal
+index: 5 identifier: c1
+index: 6 constant: 3 format: decimal
+index: 7 identifier: d1
+index: 8 constant: 4 format: decimal
+index: 9 identifier: e1
+index: 10 constant: 5 format: decimal 
+index: 11 identifier: f1
+index: 12 constant: 6 format: decimal 
+for dls148 start time: Tue Sep 25 12:18:09 2012
+expr1: a2integer relop: < expr2: 1
+expr1: b2integer relop: <= expr2: 22
+expr1: c2integer relop: = expr2: 333
+expr1: d3integer relop: <> expr2: 4444
+expr1: e4integer relop: > expr2: 55555
+expr1: f2integer relop: >= expr2: 666666
+symbol table: 
+index: 1 identifier: a2integer
+index: 2 constant: 1 format: integer
+index: 3 identifier: b2integer
+index: 4 constant: 22 format: integer
+index: 5 identifier: c2integer
+index: 6 constant: 333 format: integer
+index: 7 identifier: d3integer
+index: 8 constant: 4444 format: integer
+index: 9 identifier: e4integer
+index: 10 constant: 55555 format: integer
+index: 11 identifier: f2integer
+index: 12 constant: 666666 format: integer
+for dls148 start time: Tue Sep 25 12:18:09 2012
+expr1: a3float relop: < expr2: 1.1
+expr1: b3float relop: <= expr2: 22.22
+expr1: c3float relop: = expr2: 333.333
+expr1: d3float relop: <> expr2: 4444.4444
+expr1: e3float relop: > expr2: 55555.55555
+expr1: f3float relop: >= expr2: 666666.666666
+symbol table: 
+index: 1 identifier: a3float
+index: 2 constant: 1.1 format: float 
+index: 3 identifier: b3float
+index: 4 constant: 22.22 format: float
+index: 5 identifier: c3float
+index: 6 constant: 333.333 format: float
+index: 7 identifier: d3float
+index: 8 constant: 4444.4444 format: float
+index: 9 identifier: e3float
+index: 10 constant: 55555.55555 format: float
+index: 11 identifier: f3float
+index: 12 constant: 666666.666666 format: float
+for dls148 start time: Tue Sep 25 12:18:09 2012
+expr1: a4double relop: < expr2: 1.1E1
+expr1: b4double relop: <= expr2: 22.22E22
+expr1: c4double relop: = expr2: 333.333E+33
+expr1: d4double relop: <> expr2: 4444.4444E+44
+expr1: e4double relop: > expr2: 55555.55555E-55
+expr1: f4double relop: >= expr2: 666666.666666E-66
+symbol table: 
+index: 1 identifier: a4double
+index: 2 constant: 1.1E1 format: double
+index: 3 identifier: b4double
+index: 4 constant: 22.22E22 format: double
+index: 5 identifier: c4double
+index: 6 constant: 333.333E+33 format: double
+index: 7 identifier: d4double
+index: 8 constant: 4444.4444E+44 format: double
+index: 9 identifier: e4double
+index: 10 constant: 55555.55555E-55 format: double
+index: 11 identifier: f4double
+index: 12 constant: 666666.666666E-66 format: double

@@ -1,0 +1,155 @@
+rm -f scan.c gram.c y.tab.h y.output *.o
+yacc -dv gram.y 
+mv -f y.tab.c gram.c
+gcc -g   -c -o gram.o gram.c
+lex  -t scan.l > scan.c
+gcc -g   -c -o scan.o scan.c
+gcc -g   -c -o main.o main.c
+gcc -g gram.o scan.o main.o -o hw05test
+rm gram.c scan.c
+Starting parse
+Entering state 0
+Reading a token: Next token is token 'a' ()
+Shifting token 'a' ()
+Entering state 1
+Reducing stack by rule 11 (line 41):
+   $1 = token 'a' ()
+-> $$ = nterm aletter ()
+Stack now 0
+Entering state 5
+Reading a token: Next token is token 'b' ()
+Shifting token 'b' ()
+Entering state 2
+Reducing stack by rule 12 (line 43):
+   $1 = token 'b' ()
+-> $$ = nterm bletter ()
+Stack now 0 5
+Entering state 13
+Reading a token: Next token is token 'b' ()
+Shifting token 'b' ()
+Entering state 2
+Reducing stack by rule 12 (line 43):
+   $1 = token 'b' ()
+-> $$ = nterm bletter ()
+Stack now 0 5 13
+Entering state 21
+Reading a token: Next token is token '\n' ()
+Reducing stack by rule 10 (line 38):
+-> $$ = nterm A3 ()
+Stack now 0 5 13 21
+Entering state 23
+Reducing stack by rule 9 (line 36):
+   $1 = nterm bletter ()
+   $2 = nterm A3 ()
+-> $$ = nterm A2 ()
+Stack now 0 5 13
+Entering state 19
+Reducing stack by rule 7 (line 33):
+   $1 = nterm bletter ()
+   $2 = nterm A2 ()
+-> $$ = nterm A1 ()
+Stack now 0 5
+Entering state 11
+Reducing stack by rule 5 (line 30):
+   $1 = nterm aletter ()
+   $2 = nterm A1 ()
+-> $$ = nterm A0 ()
+Stack now 0
+Entering state 4
+Next token is token '\n' ()
+Shifting token '\n' ()
+Entering state 9
+Reducing stack by rule 1 (line 25):
+   $1 = nterm A0 ()
+   $2 = token '\n' ()
+-> $$ = nterm line ()
+Stack now 0
+Entering state 3
+Reading a token: Now at end of input.
+Stack now 0 3
+Cleanup: popping nterm line ()
+for dls148 start time: Tue Oct  2 12:14:30 2012
+for dls148 start time: Tue Oct  2 12:14:30 2012
+
+for dls148 start time: Tue Oct  2 12:14:30 2012
+Error: yyparse 1
+
+^
+syntax error
+rm -f scan.c gram.c y.tab.h y.output *.o
+yacc -dv gram.y 
+mv -f y.tab.c gram.c
+gcc -g   -c -o gram.o gram.c
+lex  -t scan.l > scan.c
+gcc -g   -c -o scan.o scan.c
+gcc -g   -c -o main.o main.c
+rm gram.c scan.c
+Starting parse
+Entering state 0
+Reading a token: Next token is token 'a' ()
+Shifting token 'a' ()
+Entering state 1
+Reducing stack by rule 11 (line 41):
+   $1 = token 'a' ()
+-> $$ = nterm aletter ()
+Stack now 0
+Entering state 5
+Reading a token: Next token is token 'b' ()
+Shifting token 'b' ()
+Entering state 2
+Reducing stack by rule 12 (line 43):
+   $1 = token 'b' ()
+-> $$ = nterm bletter ()
+Stack now 0 5
+Entering state 13
+Reading a token: Next token is token 'b' ()
+Shifting token 'b' ()
+Entering state 2
+Reducing stack by rule 12 (line 43):
+   $1 = token 'b' ()
+-> $$ = nterm bletter ()
+Stack now 0 5 13
+Entering state 21
+Reading a token: Next token is token '\n' ()
+Reducing stack by rule 10 (line 38):
+-> $$ = nterm A3 ()
+Stack now 0 5 13 21
+Entering state 23
+Reducing stack by rule 9 (line 36):
+   $1 = nterm bletter ()
+   $2 = nterm A3 ()
+-> $$ = nterm A2 ()
+Stack now 0 5 13
+Entering state 19
+Reducing stack by rule 7 (line 33):
+   $1 = nterm bletter ()
+   $2 = nterm A2 ()
+-> $$ = nterm A1 ()
+Stack now 0 5
+Entering state 11
+Reducing stack by rule 5 (line 30):
+   $1 = nterm aletter ()
+   $2 = nterm A1 ()
+-> $$ = nterm A0 ()
+Stack now 0
+Entering state 4
+Next token is token '\n' ()
+Shifting token '\n' ()
+Entering state 9
+Reducing stack by rule 1 (line 25):
+   $1 = nterm A0 ()
+   $2 = token '\n' ()
+-> $$ = nterm line ()
+Stack now 0
+Entering state 3
+Reading a token: Now at end of input.
+Stack now 0 3
+Cleanup: popping nterm line ()
+for dls148 start time: Tue Oct  2 12:14:30 2012
+for dls148 start time: Tue Oct  2 12:14:30 2012
+
+for dls148 start time: Tue Oct  2 12:14:30 2012
+Error: yyparse 1
+
+^
+syntax error

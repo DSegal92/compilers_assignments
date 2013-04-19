@@ -1,0 +1,173 @@
+Terminals which are not used
+
+   LT
+   LE
+   EQ
+   NE
+   GT
+   GE
+
+
+Grammar
+
+    0 $accept: file $end
+
+    1 primary_expr: ID
+    2             | NUMBER
+
+    3 relational_expr: primary_expr RELOP primary_expr
+
+    4 if_statement: IF relational_expr THEN
+    5             | IF relational_expr THEN ELSE
+
+    6 file: if_statement
+    7     | file if_statement
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+IF (258) 4 5
+THEN (259) 4 5
+ELSE (260) 5
+ID (261) 1
+NUMBER (262) 2
+RELOP (263) 3
+LT (264)
+LE (265)
+EQ (266)
+NE (267)
+GT (268)
+GE (269)
+
+
+Nonterminals, with rules where they appear
+
+$accept (15)
+    on left: 0
+primary_expr (16)
+    on left: 1 2, on right: 3
+relational_expr (17)
+    on left: 3, on right: 4 5
+if_statement (18)
+    on left: 4 5, on right: 6 7
+file (19)
+    on left: 6 7, on right: 0 7
+
+
+state 0
+
+    0 $accept: . file $end
+
+    IF  shift, and go to state 1
+
+    if_statement  go to state 2
+    file          go to state 3
+
+
+state 1
+
+    4 if_statement: IF . relational_expr THEN
+    5             | IF . relational_expr THEN ELSE
+
+    ID      shift, and go to state 4
+    NUMBER  shift, and go to state 5
+
+    primary_expr     go to state 6
+    relational_expr  go to state 7
+
+
+state 2
+
+    6 file: if_statement .
+
+    $default  reduce using rule 6 (file)
+
+
+state 3
+
+    0 $accept: file . $end
+    7 file: file . if_statement
+
+    $end  shift, and go to state 8
+    IF    shift, and go to state 1
+
+    if_statement  go to state 9
+
+
+state 4
+
+    1 primary_expr: ID .
+
+    $default  reduce using rule 1 (primary_expr)
+
+
+state 5
+
+    2 primary_expr: NUMBER .
+
+    $default  reduce using rule 2 (primary_expr)
+
+
+state 6
+
+    3 relational_expr: primary_expr . RELOP primary_expr
+
+    RELOP  shift, and go to state 10
+
+
+state 7
+
+    4 if_statement: IF relational_expr . THEN
+    5             | IF relational_expr . THEN ELSE
+
+    THEN  shift, and go to state 11
+
+
+state 8
+
+    0 $accept: file $end .
+
+    $default  accept
+
+
+state 9
+
+    7 file: file if_statement .
+
+    $default  reduce using rule 7 (file)
+
+
+state 10
+
+    3 relational_expr: primary_expr RELOP . primary_expr
+
+    ID      shift, and go to state 4
+    NUMBER  shift, and go to state 5
+
+    primary_expr  go to state 12
+
+
+state 11
+
+    4 if_statement: IF relational_expr THEN .
+    5             | IF relational_expr THEN . ELSE
+
+    ELSE  shift, and go to state 13
+
+    $default  reduce using rule 4 (if_statement)
+
+
+state 12
+
+    3 relational_expr: primary_expr RELOP primary_expr .
+
+    $default  reduce using rule 3 (relational_expr)
+
+
+state 13
+
+    5 if_statement: IF relational_expr THEN ELSE .
+
+    $default  reduce using rule 5 (if_statement)

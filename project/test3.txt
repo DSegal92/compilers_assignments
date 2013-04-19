@@ -1,0 +1,104 @@
+; for dls148 start time: Sun Nov 25 13:06:38 2012
+pop symbol table level: 3
+symbol table:
+next: 00100360 token: INT value: 03 address: 0f mask: 00 level: 3 length: 2 buffer: i
+next: 001002e0 token: INT value: 02 address: 0e mask: 00 level: 2 length: 2 buffer: i
+next: 00100230 token: INT value: 01 address: 0d mask: 00 level: 1 length: 2 buffer: i
+next: 00000000 token: INT value: 00 address: 0c mask: 00 level: 0 length: 2 buffer: i
+symbol table free:
+pop symbol table level: 2
+symbol table:
+next: 001002e0 token: INT value: 02 address: 0e mask: 00 level: 2 length: 2 buffer: i
+next: 00100230 token: INT value: 01 address: 0d mask: 00 level: 1 length: 2 buffer: i
+next: 00000000 token: INT value: 00 address: 0c mask: 00 level: 0 length: 2 buffer: i
+symbol table free:
+next: 00000000 token: INT value: 03 address: 0f mask: 00 level: 3 length: 2 buffer: i
+pop symbol table level: 1
+symbol table:
+next: 00100230 token: INT value: 01 address: 0d mask: 00 level: 1 length: 2 buffer: i
+next: 00000000 token: INT value: 00 address: 0c mask: 00 level: 0 length: 2 buffer: i
+symbol table free:
+next: 001003e0 token: INT value: 02 address: 0e mask: 00 level: 2 length: 2 buffer: i
+next: 00000000 token: INT value: 03 address: 0f mask: 00 level: 3 length: 2 buffer: i
+Debug: yacc tuples
+next: 00100260 instr: mov value: 00 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 001001e0 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 0 length: 2 buffer: i
+next: 001002c0 instr: label value: 00 address: 00 mask: 04 MASK_LABEL level: 0 length: 5 buffer: main
+next: 00100310 instr: mov value: 01 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 00100340 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 1 length: 2 buffer: i
+next: 00100390 instr: mov value: 02 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 001003c0 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 2 length: 2 buffer: i
+next: 00100410 instr: mov value: 03 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 00000000 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 3 length: 2 buffer: i
+Debug: code tuples
+next: 00100260 instr: mov value: 00 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 00100290 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 0 length: 2 buffer: i
+next: 00100440 instr: mov value: 00 address: 00 mask: 0c MASK_LABEL MASK_W_REG level: 0 length: 7 buffer: PORTA
+next: 00100470 instr: call value: 00 address: 00 mask: 04 MASK_LABEL level: 0 length: 6 buffer: main
+next: 001004a0 instr: goto value: 00 address: 00 mask: 04 MASK_LABEL level: 0 length: 7 buffer: mloop
+next: 001001e0 instr: return value: 00 address: 00 mask: 20 MASK_INSTR level: 0 length: 0 buffer: 0
+next: 001002c0 instr: label value: 00 address: 00 mask: 04 MASK_LABEL level: 0 length: 5 buffer: main
+next: 00100310 instr: mov value: 01 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 00100340 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 1 length: 2 buffer: i
+next: 00100390 instr: mov value: 02 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 001003c0 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 2 length: 2 buffer: i
+next: 00100410 instr: mov value: 03 address: 00 mask: 01 MASK_VALUE level: 0 length: 0 buffer: 0
+next: 00000000 instr: mov value: 00 address: 00 mask: 04 MASK_LABEL level: 3 length: 2 buffer: i
+; automatic code generation for PIC16F84A
+; EECS337 Compiler Design
+; by: dls148, date: Fall 2012
+; for PIC16F84A processor
+; CPU configuration
+; (16F84 with RC osc, watchdog timer off, power-up timer on)
+	processor 16f84A
+	include <p16F84A.inc>
+	__config _RC_OSC & _WDT_OFF & _PWRTE_ON
+;symbol table:
+i_ EQU 0xc
+;symbol table free:
+i_1 EQU 0xd
+i_2 EQU 0xe
+i_3 EQU 0xf
+; power-up or reset vector
+	org	0x00	; on reset PC set to 0x00
+reset:			
+	goto	init	; skip interrupt vector space (reserved)
+; interrupt vector 
+	org 	0x04
+inter:		; on interrupt PC set to 0x04 and automatically clears GIE
+	retfie		; return from interrupt and automatically sets GIE
+; beginning of program code
+	org	0x08
+init:
+; On reset all ports are inputs.
+	bsf	STATUS,RP0	; switch to bank 1 memory
+	clrf	TRISA		; set PORTA to all outputs
+	clrf	TRISB		; set PORTB to all outputs
+	bcf	STATUS,RP0	; return to bank 0 memory
+mloop:
+; here begins the main program
+	movlw	0x00
+	movwf	i_
+	movf	PORTA,w
+	call	main
+	goto	mloop
+	return
+main:
+	movlw	0x01
+	movwf	i_1
+	movlw	0x02
+	movwf	i_2
+	movlw	0x03
+	movwf	i_3
+	return	; if main does not have a return
+; only standard library function
+printf:			
+	movwf	PORTB	; output w to standard output (stdout)
+	return
+	end		; end of program code
+symbol table:
+next: 00000000 token: INT value: 00 address: 0c mask: 00 level: 0 length: 2 buffer: i
+symbol table free:
+next: 00100360 token: INT value: 01 address: 0d mask: 00 level: 1 length: 2 buffer: i
+next: 001003e0 token: INT value: 02 address: 0e mask: 00 level: 2 length: 2 buffer: i
+next: 00000000 token: INT value: 03 address: 0f mask: 00 level: 3 length: 2 buffer: i

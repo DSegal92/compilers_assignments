@@ -1,0 +1,324 @@
+rm -f yacc.c y.tab.h y.output *.o
+yacc -dv yacc.y 
+conflicts: 1 shift/reduce
+mv -f y.tab.c yacc.c
+gcc -g   -c -o yacc.o yacc.c
+In file included from yacc.y:23:
+codegen.c: In function ‘print_tuple’:
+codegen.c:166: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:166: warning: format ‘%08.8x’ expects type ‘unsigned int’, but argument 2 has type ‘struct tuple *’
+codegen.c:166: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:166: warning: format ‘%08.8x’ expects type ‘unsigned int’, but argument 2 has type ‘struct tuple *’
+codegen.c:168: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:168: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:169: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:169: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:170: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:170: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:191: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘char *’
+codegen.c:191: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘char *’
+lex  -t lex.l > lex.c
+gcc -g   -c -o lex.o lex.c
+gcc -g   -c -o main.o main.c
+gcc -g yacc.o lex.o main.o -o calc
+rm lex.c yacc.c
+for dls148 start time: Tue Nov 27 11:50:21 2012
+	x = 2
+	x = x + 1
+	x2 = 1
+	x2 = x2 + 1
+; automatic code generation for PIC16F84A
+; EECS337 Compiler Design
+; by: dls148, date: Fall 2012
+; for PIC16F84A processor
+; CPU configuration
+; (16F84 with RC osc, watchdog timer off, power-up timer on)
+	processor 16f84A
+	include <p16F84A.inc>
+	__config _RC_OSC & _WDT_OFF & _PWRTE_ON
+; generate symbol table: 
+x2_ EQU 0x10
+x_ EQU 0xc
+; generate temporary addresses: 
+; power-up or reset vector
+	org	0x00	; on reset PC set to 0x00
+reset:			
+	goto	init	; skip interrupt vector space (reserved)
+; interrupt vector 
+	org 	0x04
+inter:			; on interrupt PC set to 0x04 and automatically clears GIE
+	retfie		; return from interrupt and automatically sets GIE
+; beginning of program code
+	org	0x08
+init:
+; On reset all ports are inputs.
+	bsf	STATUS,RP0	; switch to bank 1 memory
+	clrf	TRISA		; set PORTA to all outputs
+	clrf	TRISB		; set PORTB to all outputs
+	bcf	STATUS,RP0	; return to bank 0 memory
+mloop:
+; read from the standard input (stdin)
+	movf	PORTA,w
+	nop
+	movlw	0x02
+	movwf	x_
+	movlw	0x01
+	addwf	x_,w
+	movwf	x_
+	movlw	0x01
+	movwf	x2_
+	movlw	0x01
+	addwf	x2_,w
+	movwf	x2_
+	goto	mloop
+; only standard library function
+printf:			
+	movwf	PORTB	; output w to standard output (stdout)
+	return
+	end		; end of program code
+symbol table: 
+index: 3 identifier: x2 type: int
+index: 2 constant: 1 format: decimal
+index: 1 constant: 2 format: decimal
+index: 0 identifier: x type: int
+for dls148 start time: Tue Nov 27 11:50:21 2012
+	i = 4
+	j = 5
+	j2 = 7
+	i = 6
+	w = i + j2
+	x = i + j
+	i2 = 8
+	y = i2 + j
+	z = i + j
+; automatic code generation for PIC16F84A
+; EECS337 Compiler Design
+; by: dls148, date: Fall 2012
+; for PIC16F84A processor
+; CPU configuration
+; (16F84 with RC osc, watchdog timer off, power-up timer on)
+	processor 16f84A
+	include <p16F84A.inc>
+	__config _RC_OSC & _WDT_OFF & _PWRTE_ON
+; generate symbol table: 
+i2_ EQU 0x28
+j2_ EQU 0x24
+j_ EQU 0x20
+i_ EQU 0x1c
+z_ EQU 0x18
+y_ EQU 0x14
+x_ EQU 0x10
+w_ EQU 0xc
+; generate temporary addresses: 
+; power-up or reset vector
+	org	0x00	; on reset PC set to 0x00
+reset:			
+	goto	init	; skip interrupt vector space (reserved)
+; interrupt vector 
+	org 	0x04
+inter:			; on interrupt PC set to 0x04 and automatically clears GIE
+	retfie		; return from interrupt and automatically sets GIE
+; beginning of program code
+	org	0x08
+init:
+; On reset all ports are inputs.
+	bsf	STATUS,RP0	; switch to bank 1 memory
+	clrf	TRISA		; set PORTA to all outputs
+	clrf	TRISB		; set PORTB to all outputs
+	bcf	STATUS,RP0	; return to bank 0 memory
+mloop:
+; read from the standard input (stdin)
+	movf	PORTA,w
+	nop
+	movlw	0x04
+	movwf	i_
+	movlw	0x05
+	movwf	j_
+	movlw	0x07
+	movwf	j2_
+	movlw	0x06
+	movwf	i_
+	movf	j2_,w
+	addwf	i_,w
+	movwf	w_
+	movf	j_,w
+	addwf	i_,w
+	movwf	x_
+	movlw	0x08
+	movwf	i2_
+	movf	j_,w
+	addwf	i2_,w
+	movwf	y_
+	movf	j_,w
+	addwf	i_,w
+	movwf	z_
+	goto	mloop
+; only standard library function
+printf:			
+	movwf	PORTB	; output w to standard output (stdout)
+	return
+	end		; end of program code
+symbol table: 
+index: 12 constant: 8 format: decimal
+index: 11 identifier: i2 type: int
+index: 10 constant: 6 format: decimal
+index: 9 constant: 7 format: decimal
+index: 8 identifier: j2 type: int
+index: 7 constant: 5 format: decimal
+index: 6 identifier: j type: int
+index: 5 constant: 4 format: decimal
+index: 4 identifier: i type: int
+index: 3 identifier: z type: int
+index: 2 identifier: y type: int
+index: 1 identifier: x type: int
+index: 0 identifier: w type: int
+for dls148 start time: Tue Nov 27 11:50:21 2012
+	a3 = 1
+	t1 = a3
+	IFTRUE a3 GOTO label1
+	a3 = a3 + 3
+	GOTO label2
+label1: 
+	a3 = a3 - 2
+label2: 
+; automatic code generation for PIC16F84A
+; EECS337 Compiler Design
+; by: dls148, date: Fall 2012
+; for PIC16F84A processor
+; CPU configuration
+; (16F84 with RC osc, watchdog timer off, power-up timer on)
+	processor 16f84A
+	include <p16F84A.inc>
+	__config _RC_OSC & _WDT_OFF & _PWRTE_ON
+; generate symbol table: 
+a3_ EQU 0xc
+; generate temporary addresses: 
+t1_ EQU 0x4f
+; power-up or reset vector
+	org	0x00	; on reset PC set to 0x00
+reset:			
+	goto	init	; skip interrupt vector space (reserved)
+; interrupt vector 
+	org 	0x04
+inter:			; on interrupt PC set to 0x04 and automatically clears GIE
+	retfie		; return from interrupt and automatically sets GIE
+; beginning of program code
+	org	0x08
+init:
+; On reset all ports are inputs.
+	bsf	STATUS,RP0	; switch to bank 1 memory
+	clrf	TRISA		; set PORTA to all outputs
+	clrf	TRISB		; set PORTB to all outputs
+	bcf	STATUS,RP0	; return to bank 0 memory
+mloop:
+; read from the standard input (stdin)
+	movf	PORTA,w
+	nop
+	movlw	0x01
+	movwf	a3_
+	movf	a3_,w
+	movwf	t1_
+	movf	a3_,w
+	btfsc	0x03,2
+	goto	label1
+	movlw	0x03
+	addwf	a3_,w
+	movwf	a3_
+	goto	label2
+label1:
+	movlw	0x02
+	subwf	a3_,w
+	movwf	a3_
+label2:
+	goto	mloop
+; only standard library function
+printf:			
+	movwf	PORTB	; output w to standard output (stdout)
+	return
+	end		; end of program code
+symbol table: 
+index: 3 constant: 2 format: decimal
+index: 2 constant: 3 format: decimal
+index: 1 constant: 1 format: decimal
+index: 0 identifier: a3 type: int
+Error: memory deallocation error: 40
+for dls148 start time: Tue Nov 27 11:50:21 2012
+	c1 = 1
+	t1 = 10
+	t4 = c1 + 1
+	c32 = t1
+	c1 = c32 [ t3 ] 
+	t6 = c1 + 2
+	t7 = c1 - 8
+	t6 = c32 [ t7 ] 
+	c32 = t6
+; automatic code generation for PIC16F84A
+; EECS337 Compiler Design
+; by: dls148, date: Fall 2012
+; for PIC16F84A processor
+; CPU configuration
+; (16F84 with RC osc, watchdog timer off, power-up timer on)
+	processor 16f84A
+	include <p16F84A.inc>
+	__config _RC_OSC & _WDT_OFF & _PWRTE_ON
+; generate symbol table: 
+c32_ EQU 0xd
+c1_ EQU 0xc
+; generate temporary addresses: 
+t6_ EQU 0x4a
+t5_ EQU 0x4b
+t4_ EQU 0x4c
+t3_ EQU 0x4d
+t2_ EQU 0x4e
+t1_ EQU 0x4f
+; power-up or reset vector
+	org	0x00	; on reset PC set to 0x00
+reset:			
+	goto	init	; skip interrupt vector space (reserved)
+; interrupt vector 
+	org 	0x04
+inter:			; on interrupt PC set to 0x04 and automatically clears GIE
+	retfie		; return from interrupt and automatically sets GIE
+; beginning of program code
+	org	0x08
+init:
+; On reset all ports are inputs.
+	bsf	STATUS,RP0	; switch to bank 1 memory
+	clrf	TRISA		; set PORTA to all outputs
+	clrf	TRISB		; set PORTB to all outputs
+	bcf	STATUS,RP0	; return to bank 0 memory
+mloop:
+; read from the standard input (stdin)
+	movf	PORTA,w
+	nop
+	movlw	0x01
+	movwf	c1_
+	movlw	0x0a
+	movwf	t1_
+	movlw	0x01
+	addwf	c1_,w
+	movwf	t4_
+	movf	t1_,w
+	movwf	c32_
+	movlw	0x02
+	addwf	c1_,w
+	movwf	t6_
+	movlw	0x08
+	subwf	c1_,w
+	movwf	t7_
+	movf	t6_,w
+	movwf	c32_
+	goto	mloop
+; only standard library function
+printf:			
+	movwf	PORTB	; output w to standard output (stdout)
+	return
+	end		; end of program code
+symbol table: 
+index: 6 constant: 8 format: decimal
+index: 5 constant: 2 format: decimal
+index: 4 constant: 10 format: decimal
+index: 3 constant: 1 format: decimal
+index: 2 constant: 32 format: decimal
+index: 1 identifier: c32[32] type: char
+index: 0 identifier: c1 type: char

@@ -1,0 +1,304 @@
+Grammar
+
+    0 $accept: line $end
+
+    1 line: A0 '\n'
+    2     | line A0 '\n'
+
+    3 A0: aletter A0
+    4   | bletter A0
+    5   | aletter A1
+
+    6 A1: aletter A2
+    7   | bletter A2
+
+    8 A2: aletter A3
+    9   | bletter A3
+
+   10 A3: /* empty */
+
+   11 aletter: 'a'
+
+   12 bletter: 'b'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 1 2
+'a' (97) 11
+'b' (98) 12
+error (256)
+
+
+Nonterminals, with rules where they appear
+
+$accept (6)
+    on left: 0
+line (7)
+    on left: 1 2, on right: 0 2
+A0 (8)
+    on left: 3 4 5, on right: 1 2 3 4
+A1 (9)
+    on left: 6 7, on right: 5
+A2 (10)
+    on left: 8 9, on right: 6 7
+A3 (11)
+    on left: 10, on right: 8 9
+aletter (12)
+    on left: 11, on right: 3 5 6 8
+bletter (13)
+    on left: 12, on right: 4 7 9
+
+
+state 0
+
+    0 $accept: . line $end
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    line     go to state 3
+    A0       go to state 4
+    aletter  go to state 5
+    bletter  go to state 6
+
+
+state 1
+
+   11 aletter: 'a' .
+
+    $default  reduce using rule 11 (aletter)
+
+
+state 2
+
+   12 bletter: 'b' .
+
+    $default  reduce using rule 12 (bletter)
+
+
+state 3
+
+    0 $accept: line . $end
+    2 line: line . A0 '\n'
+
+    $end  shift, and go to state 7
+    'a'   shift, and go to state 1
+    'b'   shift, and go to state 2
+
+    A0       go to state 8
+    aletter  go to state 5
+    bletter  go to state 6
+
+
+state 4
+
+    1 line: A0 . '\n'
+
+    '\n'  shift, and go to state 9
+
+
+state 5
+
+    3 A0: aletter . A0
+    5   | aletter . A1
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    A0       go to state 10
+    A1       go to state 11
+    aletter  go to state 12
+    bletter  go to state 13
+
+
+state 6
+
+    4 A0: bletter . A0
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    A0       go to state 14
+    aletter  go to state 5
+    bletter  go to state 6
+
+
+state 7
+
+    0 $accept: line $end .
+
+    $default  accept
+
+
+state 8
+
+    2 line: line A0 . '\n'
+
+    '\n'  shift, and go to state 15
+
+
+state 9
+
+    1 line: A0 '\n' .
+
+    $default  reduce using rule 1 (line)
+
+
+state 10
+
+    3 A0: aletter A0 .
+
+    $default  reduce using rule 3 (A0)
+
+
+state 11
+
+    5 A0: aletter A1 .
+
+    $default  reduce using rule 5 (A0)
+
+
+state 12
+
+    3 A0: aletter . A0
+    5   | aletter . A1
+    6 A1: aletter . A2
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    A0       go to state 10
+    A1       go to state 11
+    A2       go to state 16
+    aletter  go to state 17
+    bletter  go to state 18
+
+
+state 13
+
+    4 A0: bletter . A0
+    7 A1: bletter . A2
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    A0       go to state 14
+    A2       go to state 19
+    aletter  go to state 20
+    bletter  go to state 21
+
+
+state 14
+
+    4 A0: bletter A0 .
+
+    $default  reduce using rule 4 (A0)
+
+
+state 15
+
+    2 line: line A0 '\n' .
+
+    $default  reduce using rule 2 (line)
+
+
+state 16
+
+    6 A1: aletter A2 .
+
+    $default  reduce using rule 6 (A1)
+
+
+state 17
+
+    3 A0: aletter . A0
+    5   | aletter . A1
+    6 A1: aletter . A2
+    8 A2: aletter . A3
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    $default  reduce using rule 10 (A3)
+
+    A0       go to state 10
+    A1       go to state 11
+    A2       go to state 16
+    A3       go to state 22
+    aletter  go to state 17
+    bletter  go to state 18
+
+
+state 18
+
+    4 A0: bletter . A0
+    7 A1: bletter . A2
+    9 A2: bletter . A3
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    $default  reduce using rule 10 (A3)
+
+    A0       go to state 14
+    A2       go to state 19
+    A3       go to state 23
+    aletter  go to state 20
+    bletter  go to state 21
+
+
+state 19
+
+    7 A1: bletter A2 .
+
+    $default  reduce using rule 7 (A1)
+
+
+state 20
+
+    3 A0: aletter . A0
+    5   | aletter . A1
+    8 A2: aletter . A3
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    $default  reduce using rule 10 (A3)
+
+    A0       go to state 10
+    A1       go to state 11
+    A3       go to state 22
+    aletter  go to state 12
+    bletter  go to state 13
+
+
+state 21
+
+    4 A0: bletter . A0
+    9 A2: bletter . A3
+
+    'a'  shift, and go to state 1
+    'b'  shift, and go to state 2
+
+    $default  reduce using rule 10 (A3)
+
+    A0       go to state 14
+    A3       go to state 23
+    aletter  go to state 5
+    bletter  go to state 6
+
+
+state 22
+
+    8 A2: aletter A3 .
+
+    $default  reduce using rule 8 (A2)
+
+
+state 23
+
+    9 A2: bletter A3 .
+
+    $default  reduce using rule 9 (A2)

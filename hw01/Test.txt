@@ -1,0 +1,82 @@
+rm -f *.o lex.c yacc.c y.output
+gcc -g   -c -o Code_1_6_1.o Code_1_6_1.c
+gcc Code_1_6_1.o -lm -g  -o Code_1_6_1
+gcc -g   -c -o Code_1_6_2.o Code_1_6_2.c
+gcc Code_1_6_2.o  -lm -g  -o Code_1_6_2
+gcc -g   -c -o Code_1_6_4.o Code_1_6_4.c
+gcc Code_1_6_4.o  -lm -g  -o Code_1_6_4
+gcc -g   -c -o Echo.o Echo.c
+gcc Echo.o -lm -g  -o Echo
+w:13,	x:11,	y:13,	z:11
+w:9,	x:7,	y:13,	z:11
+3
+2
+/*******************************************************************************
+*
+* FILE:		Echo.c
+*
+* DESC:		EECS 337 Homework Assignment 1
+*
+* AUTHOR:	dls148
+*
+* DATE:		August 28, 2012
+*
+* EDIT HISTORY:	
+*
+*******************************************************************************/
+
+#include	<stdio.h>
+/*
+ *	main program
+ */
+
+int	main( int argc, char *argv[]) {
+#define START 0
+#define SLASH1 1
+#define SLASH2 2
+
+    int state;
+    int c;
+
+    while ((c = getchar()) != EOF) {
+    {
+        switch(state)
+        {
+            case START:
+                switch(c)
+                {
+                    case '/':
+                        state = SLASH1;
+                        break;
+                    default:
+                        putchar(c);  
+                }
+                break;
+            case SLASH1:
+                switch(c)
+                {
+                    case '/':
+                        state = SLASH2;
+                    break;
+                    default:
+                        state = START;
+                    putchar( '/');
+                    putchar(c);
+                }
+            case SLASH2:
+                switch(c)
+                {
+                    case '\n':
+                        state = START;
+                    putchar(c);
+                    default:
+                        break;
+                    }
+                break;
+                }
+        }
+    }
+    
+    return 0;
+}
+

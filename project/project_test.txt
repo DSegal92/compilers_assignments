@@ -1,0 +1,13 @@
+rm -f gram.c y.tab.h y.output *.o
+yacc -dv gram.y 
+mv -f y.tab.c gram.c
+gcc -g   -c -o gram.o gram.c
+lex  -t scan.l > scan.c
+gcc -g   -c -o scan.o scan.c
+gcc -g   -c -o main.o main.c
+gcc -g   -c -o audit.o audit.c
+gcc -g   -c -o tuple.o tuple.c
+gcc -g   -c -o symbols.o symbols.c
+gcc -g   -c -o codegen.o codegen.c
+gcc -g gram.o scan.o main.o audit.o tuple.o symbols.o codegen.o  -o ansi_c
+rm gram.c scan.c

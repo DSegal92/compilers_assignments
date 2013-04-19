@@ -1,0 +1,18 @@
+int w;
+int x;
+int y;
+int z;
+int i;
+i = 4;
+int j;
+j = 5;
+int j2;
+j2 = 7;
+i = 6;
+w = i + j2;
+x = i + j;
+int i2;
+i2 = 8;
+y = i2 + j;
+z = i + j;
+

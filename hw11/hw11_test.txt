@@ -1,0 +1,26 @@
+rm -f yacc.c y.tab.h y.output *.o
+yacc -dv yacc.y 
+conflicts: 1 shift/reduce
+mv -f y.tab.c yacc.c
+gcc -g   -c -o yacc.o yacc.c
+In file included from yacc.y:23:
+codegen.c: In function ‘print_tuple’:
+codegen.c:163: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:163: warning: format ‘%08.8x’ expects type ‘unsigned int’, but argument 2 has type ‘struct tuple *’
+codegen.c:163: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:163: warning: format ‘%08.8x’ expects type ‘unsigned int’, but argument 2 has type ‘struct tuple *’
+codegen.c:165: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:165: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:166: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:166: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:167: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:167: warning: '0' flag ignored with precision and ‘%x’ printf format
+codegen.c:188: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘char *’
+codegen.c:188: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘char *’
+lex  -t lex.l > lex.c
+gcc -g   -c -o lex.o lex.c
+gcc -g   -c -o main.o main.c
+gcc -g yacc.o lex.o main.o -o calc
+rm lex.c yacc.c
+./hw11_test.sh: line 6: 21819 Segmentation fault: 11  ./calc math17.calc
+./hw11_test.sh: line 7: 21821 Segmentation fault: 11  ./calc math18.calc
