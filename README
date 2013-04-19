@@ -1,0 +1,2 @@
+EECS 337. Compiler Design
+Design and implementation of compilers and other language processors. Scanners and lexical analysis; regular expressions and finite automata; scanner generators; parsers and syntax analysis; context free grammars; parser generators; semantic analysis; intermediate code generation; runtime environments; code generation; machine independent optimizations; data flow and dependence analysis. There will be a significant programming project involving the use of compiler tools and software development tools and techniques
